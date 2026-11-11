@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NetLearn Simulator - by Iqbal</title>
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header>
+    <h1>NetLearn Simulator - by Iqbal <small>educational simulation · not real firmware</small></h1>
+    <button id="btn-theme" title="Switch light/dark theme">Theme</button>
+    <button id="btn-about">About</button>
+  </header>
+
+  <div class="toolbar">
+    <button id="btn-new">New</button>
+    <button id="btn-save">Save JSON</button>
+    <button id="btn-load">Load JSON</button>
+    <input type="file" id="file-load" accept=".json,application/json" hidden>
+    <button id="btn-calc" title="Subnet calculator (Lab 02, Lab 05)">Subnet calc</button>
+    <span class="sep"></span>
+    <button id="btn-select" title="Move and select">Select</button>
+    <button id="btn-link" title="Draw a cable between two devices">Cable</button>
+    <span id="mode-hint"></span>
+    <span class="sep"></span>
+    <button id="btn-play">Play</button>
+    <button id="btn-step" title="Process the next event only">Step</button>
+    <button id="btn-reset">Reset</button>
+    <button id="btn-conv" title="Run 60 s of simulated time instantly (routing protocols converge)">Converge +60 s</button>
+    <label>Speed <input type="range" id="speed" min="0.02" max="2" step="0.02" value="0.1"> <span id="speed-val">0.1x</span></label>
+    <label class="chk"><input type="checkbox" id="ctl"> Control packets</label>
+    <span class="sep"></span>
+    <label>Ping <select id="ping-src"></select> to <select id="ping-dst"></select></label>
+    <button id="btn-ping" class="primary">Send ping</button>
+    <span id="clock"></span>
+  </div>
+
+  <main>
+    <aside id="palette-wrap"><h2>Devices</h2><div id="palette"></div></aside>
+    <section id="canvas-wrap"><canvas id="canvas"></canvas></section>
+    <aside id="props-wrap"><div class="tabs"><button data-rtab="lab" class="active">Lab</button><button data-rtab="props">Device</button></div><div id="props" hidden></div><div id="labpanel"></div></aside>
+  </main>
+
+  <section id="log-wrap">
+    <header><span class="tabs"><button data-btab="log" class="active">Event log</button><button data-btab="terminal">Terminal</button></span><button id="btn-clearlog">Clear log</button></header>
+    <div id="log"></div><div id="terminal" hidden></div>
+  </section>
+
+  <footer id="footer-credit"></footer>
+
+  <dialog id="about-dialog"></dialog>
+  <dialog id="calc-dialog"><form method="dialog"><h2>Subnet calculator</h2><div class="row"><label>IPv4 address<input id="calc-in" placeholder="172.22.32.12"></label><label>Mask or /prefix<input id="calc-mask" placeholder="255.255.224.0 or 19"></label></div><pre id="calc-out" class="calc"></pre><div class="actions"><button id="calc-go">Calculate</button><button value="close">Close</button></div></form></dialog>
+  <dialog id="link-dialog">
+    <form method="dialog">
+      <h2>Connect cable</h2>
+      <div class="row">
+        <label><span id="link-a-name"></span> port<select id="link-a-port"></select></label>
+        <label><span id="link-b-name"></span> port<select id="link-b-port"></select></label>
+      </div>
+      <div class="actions"><button value="cancel">Cancel</button><button id="link-ok" class="primary" value="ok">Connect</button></div>
+    </form>
+  </dialog>
+
+  <!-- Plain script tags: works by double-clicking index.html (no server). Order matters. -->
+  <script src="js/engine/addr.js"></script>
+  <script src="js/engine/packet.js"></script>
+  <script src="js/engine/link.js"></script>
+  <script src="js/engine/engine.js"></script>
+  <script src="js/devices/device.js"></script>
+  <script src="js/protocols/l2.js"></script>
+  <script src="js/protocols/l3.js"></script>
+  <script src="js/protocols/services.js"></script>
+  <script src="js/protocols/filter.js"></script>
+  <script src="js/protocols/nat.js"></script>
+  <script src="js/protocols/routing-rip.js"></script>
+  <script src="js/protocols/routing-ospf.js"></script>
+  <script src="js/protocols/ipv6.js"></script>
+  <script src="js/protocols/tunnels.js"></script>
+  <script src="js/devices/host.js"></script>
+  <script src="js/devices/server.js"></script>
+  <script src="js/devices/switch.js"></script>
+  <script src="js/devices/l3switch.js"></script>
+  <script src="js/devices/router.js"></script>
+  <script src="js/devices/firewall.js"></script>
+  <script src="js/devices/cloud.js"></script>
+  <script src="js/devices/sdn-controller.js"></script>
+  <script src="js/devices/wireless-ap.js"></script>
+  <script src="js/engine/topology.js"></script>
+  <script src="js/labs/lab-engine.js"></script>
+  <script src="js/labs/labs-basics.js"></script>
+  <script src="js/labs/labs-services.js"></script>
+  <script src="js/labs/labs-advanced.js"></script>
+  <script src="js/cli/cli-core.js"></script>
+  <script src="js/ui/canvas.js"></script>
+  <script src="js/ui/palette.js"></script>
+  <script src="js/ui/inspector.js"></script>
+  <script src="js/ui/terminal-ui.js"></script>
+  <script src="js/ui/labs-ui.js"></script>
+  <script src="js/ui/about-modal.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

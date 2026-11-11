@@ -1,0 +1,11 @@
+/* themes.css - colour tokens. Light/dark switch via <html data-theme="..."> */
+:root, :root[data-theme="dark"] {
+  --bg: #0e1620; --panel: #162231; --panel-2: #1c2b3d; --border: #2b3d52;
+  --text: #e6edf5; --muted: #8ba0b6; --accent: #f5b83d; --link: #4f8fc9; --bad: #ff6b6b; --ok: #3dd6a3; --grid: #22344a;
+  --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, "DejaVu Sans Mono", monospace;
+}
+:root[data-theme="light"] {
+  --bg: #f1f5f9; --panel: #ffffff; --panel-2: #e8eef5; --border: #c5d1de;
+  --text: #15202c; --muted: #5a6b7d; --accent: #c77f00; --link: #2f6fb0; --bad: #d63b3b; --ok: #12906a; --grid: #cfd9e4;
+}

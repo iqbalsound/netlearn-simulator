@@ -1,0 +1,15 @@
+Origin: NetLearn
+Label: NetLearn Simulator
+Suite: stable
+Codename: stable
+Date: Wed, 11 Nov 2026 23:45:40 +0000
+Architectures: all amd64 arm64
+Components: main
+Description: NetLearn Simulator - by Iqbal
+SHA256:
+ b55308ed65f71076e8639a1700e97d7e28202b3c5a20c4126da4c3c7b71e9170              680 main/binary-all/Packages
+ ce81eff9b969cae64492e17a079a6fdc1c034c4352d10050aceb0401a726898e              471 main/binary-all/Packages.gz
+ b55308ed65f71076e8639a1700e97d7e28202b3c5a20c4126da4c3c7b71e9170              680 main/binary-amd64/Packages
+ ce81eff9b969cae64492e17a079a6fdc1c034c4352d10050aceb0401a726898e              471 main/binary-amd64/Packages.gz
+ b55308ed65f71076e8639a1700e97d7e28202b3c5a20c4126da4c3c7b71e9170              680 main/binary-arm64/Packages
+ ce81eff9b969cae64492e17a079a6fdc1c034c4352d10050aceb0401a726898e              471 main/binary-arm64/Packages.gz

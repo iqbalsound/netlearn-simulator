@@ -1,0 +1,34 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: NetLearn
+Label: NetLearn Simulator
+Suite: stable
+Codename: stable
+Date: Wed, 11 Nov 2026 23:45:40 +0000
+Architectures: all amd64 arm64
+Components: main
+Description: NetLearn Simulator - by Iqbal
+SHA256:
+ b55308ed65f71076e8639a1700e97d7e28202b3c5a20c4126da4c3c7b71e9170              680 main/binary-all/Packages
+ ce81eff9b969cae64492e17a079a6fdc1c034c4352d10050aceb0401a726898e              471 main/binary-all/Packages.gz
+ b55308ed65f71076e8639a1700e97d7e28202b3c5a20c4126da4c3c7b71e9170              680 main/binary-amd64/Packages
+ ce81eff9b969cae64492e17a079a6fdc1c034c4352d10050aceb0401a726898e              471 main/binary-amd64/Packages.gz
+ b55308ed65f71076e8639a1700e97d7e28202b3c5a20c4126da4c3c7b71e9170              680 main/binary-arm64/Packages
+ ce81eff9b969cae64492e17a079a6fdc1c034c4352d10050aceb0401a726898e              471 main/binary-arm64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE7pZnW0UWH0G5uugzQ3bsZkys4rAFAmr0/iQACgkQQ3bsZkys
+4rDu8hAAjBW8eHYirHDh1ppA7eUmSifeB0+cvoiu2QxSySCsy0H9TAbChizdgIR4
+uinDNg6mRJZ/DHkTokbDzoJMSOe/dEQ/wkXCX8gDtoEknz3sM82aD+qR19DZmNl5
+BSwqSeYDoeJ17QgCJuGeQHa1259a3AKk/KpQ4qVwDkd6thh8jltTT4Q+6oGvWYoz
+bA7VY/q/jYX6yGFNA7Rofw9sPt3NM4as4hXVB18YQyvqE/8lPR/QWd2X9ijvvXjR
+JKoUAiV3Ah3fySYyhUCiBCU4j7K5ZqJJOS2LBMtYr//Oxu+q8VhTFqQAemYDnaU5
+nykUL2Fn+h+pKmAhFLjn0emxGGdnKurxZhHJV0AKnH0jKA0MTNS/ngFrbGXDHXtB
+da3MHLPptZjyRHRsxcaArlvvRy8xO0rsR2LFdW0J5TTTtucT+0OG4lhvizUCdaPn
+F7RswibvxwE0ADCV1xNl10Fc7fXTNDaTxISf038w49jCEHjzbq3FNMI6IGq4GAKV
+59z8yMR551sZBPH585P/LQEDFM65ts0tzw0wc7ZLSnVZCxuQ8dWz9a71jr2bX0c5
+WBdCnV0X6pF6cr9iIa+LanivbGeLf2fi3vmJ+9ikXEndCI+NovsSplQweK0vwkwM
+rnkE0pk5awdNHzDnSYiwceGFBaU76aqCH4ypoKhSv6IY9HH2aVA=
+=KTUT
+-----END PGP SIGNATURE-----
