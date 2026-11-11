@@ -1,0 +1,113 @@
+name: Build and release
+# Push a tag like v0.2 -> builds .deb, .rpm, Windows installer + portable zip,
+# creates a GitHub Release with all files, and updates the APT repository on GitHub Pages.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build, e.g. 0.2'
+        required: true
+        default: '0.2'
+permissions:
+  contents: write
+env:
+  VERSION: ${{ github.event.inputs.version || github.ref_name }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node tests/run-labs.js
+
+  deb:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build .deb
+        run: VERSION="${VERSION#v}" sh packaging/build-deb.sh
+      - uses: actions/upload-artifact@v4
+        with: { name: deb, path: dist/*.deb }
+
+  rpm:
+    needs: test
+    runs-on: ubuntu-latest
+    container: fedora:40
+    steps:
+      - run: dnf install -y rpm-build tar gzip git sed
+      - uses: actions/checkout@v4
+      - name: Build .rpm
+        run: VERSION="${VERSION#v}" sh packaging/build-rpm.sh
+      - uses: actions/upload-artifact@v4
+        with: { name: rpm, path: dist/*.rpm }
+
+  windows:
+    needs: test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stage files and portable zip
+        shell: pwsh
+        run: |
+          $v = "$env:VERSION" -replace '^v',''
+          "VER=$v" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          New-Item -ItemType Directory -Force build/windows/app, dist | Out-Null
+          Copy-Item index.html, README.md, css, js -Destination build/windows/app -Recurse
+          Copy-Item packaging/windows/NetLearn-Simulator.bat build/windows/
+          Compress-Archive -Path build/windows/* -DestinationPath "dist/NetLearn-Simulator-$v-windows-portable.zip"
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+      - name: Build Setup.exe
+        shell: pwsh
+        run: '& "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DAppVersion=$env:VER" packaging\windows\installer.iss'
+      - uses: actions/upload-artifact@v4
+        with: { name: windows, path: dist/* }
+
+  release:
+    needs: [deb, rpm, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: dist, merge-multiple: true }
+      - name: Version
+        run: echo "VER=${VERSION#v}" >> "$GITHUB_ENV"
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VER }}
+          name: NetLearn Simulator v${{ env.VER }}
+          generate_release_notes: true
+          files: dist/*
+
+  apt-repo:
+    needs: deb
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch existing Pages site (keeps older .deb versions)
+        uses: actions/checkout@v4
+        with: { ref: gh-pages, path: site }
+        continue-on-error: true
+      - uses: actions/download-artifact@v4
+        with: { name: deb, path: new-debs }
+      - name: Import signing key
+        env:
+          KEY: ${{ secrets.APT_GPG_PRIVATE_KEY }}
+        run: |
+          [ -n "$KEY" ] || { echo "::error::Secret APT_GPG_PRIVATE_KEY is missing (see docs/RELEASING.md)"; exit 1; }
+          echo "$KEY" | gpg --batch --import
+      - name: Build signed APT repo + copy web app
+        env:
+          APT_GPG_PASSPHRASE: ${{ secrets.APT_GPG_PASSPHRASE }}
+        run: |
+          mkdir -p site && rm -rf site/.git
+          cp -r index.html css js site/ && touch site/.nojekyll
+          bash scripts/make-apt-repo.sh site new-debs
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site

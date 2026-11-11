@@ -1,0 +1,9 @@
+#!/bin/sh
+# Launcher: opens the simulator in your default web browser (fully offline).
+APP="/usr/share/netlearn-simulator/index.html"
+[ -f "$APP" ] || APP="$(dirname "$0")/../../index.html"
+if command -v xdg-open >/dev/null 2>&1; then exec xdg-open "$APP"; fi
+for b in firefox chromium chromium-browser google-chrome; do
+  command -v "$b" >/dev/null 2>&1 && exec "$b" "$APP"
+done
+echo "No browser found. Open this file manually: $APP" >&2; exit 1

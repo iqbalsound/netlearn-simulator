@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=NetLearn Simulator
+Comment=Educational network simulator by Iqbal Uddin Khan
+Exec=netlearn-simulator
+Terminal=false
+Categories=Education;Network;
