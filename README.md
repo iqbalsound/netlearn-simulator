@@ -1,4 +1,4 @@
-# NetLearn Simulator - by Iqbal (v0.2)
+# NetLearn Simulator - by Iqbal (v0.3)
 
 Educational network simulator that runs in a browser, fully offline. It simulates behaviour for learning; it does **not** run real vendor firmware.
 
@@ -7,7 +7,13 @@ Educational network simulator that runs in a browser, fully offline. It simulate
 ## Run
 Open `index.html` (double-click). Plain `<script>` tags are used, so no server is needed.
 
-## What is new in v0.2
+## What is new in v0.3
+* **Lab completion report (PDF):** press **Report** (top bar) or **Completion report (PDF)** at the bottom of the Lab panel. Enter the Student name and Student ID and download a PDF listing every lab with its status, checks passed and the **date of completion**.
+* A lab is recorded as **Completed** only when **Check my work** passes every check *and* the model solution was not applied in that attempt (Reset lab to try again). The first completion date is kept.
+* Progress is kept in the browser (localStorage); **Clear progress** in the report dialog wipes it (use on shared lab PCs). The PDF is produced by a small built-in writer, so it still works offline with no libraries.
+* New files: `js/ui/pdf-writer.js`, `js/ui/progress.js`, `js/ui/report.js`; test: `node tests/run-report.js`.
+
+## What was new in v0.2
 * **Real addressing:** every NIC has a MAC, IPv4 and IPv6 address, DHCP client option, up/down state.
 * **Switch ports:** access / trunk (802.1Q) / out-of-band per port, VLAN IDs, allowed VLANs, native VLAN, SVIs (L3 switch), MAC learning.
 * **Router config:** interface IPs, VLAN sub-interfaces, static routes, RIP/RIPng, OSPF/OSPFv3, DHCP server + relay, NAT masquerade (PAT), stateful firewall (order matters), DNS, tunnels (GRE, IP-in-IP, 6in4, IPsec concept, WireGuard concept).
@@ -19,8 +25,8 @@ Open `index.html` (double-click). Plain `<script>` tags are used, so no server i
 ## Install packages
 | Platform | Build | Install |
 |---|---|---|
-| Debian/Ubuntu/Kali | `sh packaging/build-deb.sh` | `sudo apt install ./dist/netlearn-simulator_0.2_all.deb` |
-| Fedora/RHEL/openSUSE | `sh packaging/build-rpm.sh` (needs `rpm-build`) | `sudo dnf install ./dist/netlearn-simulator-0.2-1*.rpm` |
+| Debian/Ubuntu/Kali | `sh packaging/build-deb.sh` | `sudo apt install ./dist/netlearn-simulator_0.3_all.deb` |
+| Fedora/RHEL/openSUSE | `sh packaging/build-rpm.sh` (needs `rpm-build`) | `sudo dnf install ./dist/netlearn-simulator-0.3-1*.rpm` |
 | Windows | `sh packaging/build-windows.sh` (Git Bash/WSL) | unzip, double-click `NetLearn-Simulator.bat`; or compile `packaging/windows/installer.iss` with Inno Setup |
 
 ## Publish to GitHub over SSH

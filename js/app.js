@@ -4,8 +4,11 @@
     const $ = id => document.getElementById(id);
     const topology = new NL.Topology(), engine = new NL.Engine(topology), view = new NL.CanvasView($('canvas'), topology, engine);
     const inspector = new NL.Inspector($('props'), topology, view), term = new NL.TerminalUI($('terminal'), topology);
-    NL.buildPalette($('palette'), view); NL.initAbout($('about-dialog'), $('btn-about'));
+    NL.buildPalette($('palette'), view); NL.initAbout($('about-dialog'), $('btn-about')); NL.initReport($('report-dialog'), $('btn-report'));
     const labs = new NL.LabsUI($('labpanel'), topology, view, () => { showTab('lab'); engine.log('Lab loaded - configure the devices, then press "Check my work".'); fitView(); });
+
+    NL.Report.onChange = () => labs.render();
+    $('report-dialog').addEventListener('close', () => labs.render());
 
     /* ----- tabs ----- */
     function showTab(t) { ['props', 'labpanel'].forEach(id => $(id).hidden = (id === 'props') !== (t === 'props')); document.querySelectorAll('[data-rtab]').forEach(b => b.classList.toggle('active', b.dataset.rtab === t)); }

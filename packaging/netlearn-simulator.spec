@@ -1,5 +1,5 @@
 Name:       netlearn-simulator
-Version:    0.2
+Version:    0.3
 Release:    1%{?dist}
 Summary:    NetLearn Simulator - educational network simulator
 License:    TBD
@@ -26,5 +26,8 @@ install -m 644 packaging/linux/netlearn-simulator.desktop %{buildroot}/usr/share
 /usr/share/applications/netlearn-simulator.desktop
 
 %changelog
+* Mon Nov 23 2026 Iqbal Uddin Khan <iqbalsound@yahoo.com> - 0.3-1
+- v0.3: lab completion tracking and PDF completion report (student name, ID, dates)
+
 * Wed Nov 11 2026 Iqbal Uddin Khan <iqbalsound@yahoo.com> - 0.2-1
 - v0.2: configurable devices, 17 manual labs

@@ -1,5 +1,5 @@
 name: Build and release
-# Push a tag like v0.2 -> builds .deb, .rpm, Windows installer + portable zip,
+# Push a tag like v0.3 -> builds .deb, .rpm, Windows installer + portable zip,
 # creates a GitHub Release with all files, and updates the APT repository on GitHub Pages.
 on:
   push:
@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to build, e.g. 0.2'
+        description: 'Version to build, e.g. 0.3'
         required: true
-        default: '0.2'
+        default: '0.3'
 permissions:
   contents: write
 env:

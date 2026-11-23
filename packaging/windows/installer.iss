@@ -2,7 +2,7 @@
 ;   1) run packaging\build-windows.sh (or copy files to build\windows\app)
 ;   2) open this file in Inno Setup and press Compile -> Output\NetLearn-Simulator-Setup.exe
 #ifndef AppVersion
-  #define AppVersion "0.2"
+  #define AppVersion "0.3"
 #endif
 
 [Setup]

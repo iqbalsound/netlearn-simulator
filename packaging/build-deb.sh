@@ -1,7 +1,7 @@
 #!/bin/sh
 # Build a .deb (Debian, Ubuntu, Kali, Mint). Run from anywhere: sh packaging/build-deb.sh
 set -e
-VER="${VERSION:-0.2}"; VER="${VER#v}"; ROOT="$(cd "$(dirname "$0")/.." && pwd)"; B="$ROOT/build/deb"; PKG="$B/netlearn-simulator_${VER}_all"
+VER="${VERSION:-0.3}"; VER="${VER#v}"; ROOT="$(cd "$(dirname "$0")/.." && pwd)"; B="$ROOT/build/deb"; PKG="$B/netlearn-simulator_${VER}_all"
 rm -rf "$B"; mkdir -p "$PKG/DEBIAN" "$PKG/usr/share/netlearn-simulator" "$PKG/usr/bin" "$PKG/usr/share/applications" "$ROOT/dist"
 cp -r "$ROOT/index.html" "$ROOT/css" "$ROOT/js" "$ROOT/README.md" "$PKG/usr/share/netlearn-simulator/"
 install -m 755 "$ROOT/packaging/linux/netlearn-simulator" "$PKG/usr/bin/netlearn-simulator"

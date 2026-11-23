@@ -1,7 +1,7 @@
 #!/bin/sh
 # Build an .rpm (Fedora, RHEL, Rocky, Alma, openSUSE). Needs: sudo dnf install rpm-build
 set -e
-VER="${VERSION:-0.2}"; VER="${VER#v}"; ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+VER="${VERSION:-0.3}"; VER="${VER#v}"; ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 command -v rpmbuild >/dev/null || { echo "Install rpm-build first (sudo dnf install rpm-build)"; exit 1; }
 mkdir -p "$HOME/rpmbuild/SOURCES" "$ROOT/dist"
 T="$(mktemp -d)"; mkdir "$T/netlearn-simulator-$VER"

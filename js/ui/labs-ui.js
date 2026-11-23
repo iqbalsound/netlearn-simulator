@@ -3,13 +3,14 @@
   const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   NL.LabsUI = class {
     constructor(el, topo, view, onLoad) {
-      this.el = el; this.topo = topo; this.view = view; this.onLoad = onLoad; this.lab = null; this.render();
+      this.el = el; this.topo = topo; this.view = view; this.onLoad = onLoad; this.lab = null; this.solved = false; this.res = null; this.render();
       el.addEventListener('click', e => { const a = e.target.dataset.lab; if (a) this[a](); });
       el.addEventListener('change', e => { if (e.target.id === 'lab-sel' && e.target.value) this.open(e.target.value); });
     }
     render(res) {
+      if (res === undefined) res = this.res;
       const groups = {}; NL.LABS.forEach(l => (groups[l.group] = groups[l.group] || []).push(l));
-      let h = '<select id="lab-sel"><option value="">Choose a lab…</option>' + Object.entries(groups).map(([g, ls]) => '<optgroup label="' + g + '">' + ls.map(l => '<option value="' + l.id + '"' + (this.lab && this.lab.id === l.id ? ' selected' : '') + '>' + esc(l.title) + '</option>').join('') + '</optgroup>').join('') + '</select>';
+      let h = '<select id="lab-sel"><option value="">Choose a lab…</option>' + Object.entries(groups).map(([g, ls]) => '<optgroup label="' + g + '">' + ls.map(l => '<option value="' + l.id + '"' + (this.lab && this.lab.id === l.id ? ' selected' : '') + '>' + (NL.Progress && NL.Progress.isDone(l.id) ? '\u2714 ' : '') + esc(l.title) + '</option>').join('') + '</optgroup>').join('') + '</select>';
       const L = this.lab;
       if (L) {
         h += '<h3>' + esc(L.title) + '</h3><span class="badge">' + L.level + '</span><p>' + esc(L.objective) + '</p><ol>' + L.steps.map(s => '<li>' + esc(s) + '</li>').join('') + '</ol>' +
@@ -17,12 +18,25 @@
           '<div class="btns"><button class="primary" data-lab="check">Check my work</button><button data-lab="converge">Converge +60 s</button><button data-lab="reset">Reset lab</button><button data-lab="solve" class="warn">Show solution</button></div>';
         if (res) h += '<h4>' + res.filter(r => r.pass).length + ' / ' + res.length + ' checks passed</h4><ul class="checks">' + res.map(r => '<li class="' + (r.pass ? 'pass' : 'fail') + '">' + (r.pass ? '✔ ' : '✘ ') + esc(r.desc) + '<small> ' + esc(r.note) + '</small></li>').join('') + '</ul>';
       } else h += '<p class="hint">Pick a lab from the Computer Networks lab manual (Labs 01-15) or an extra lab. The topology is cabled for you; you configure the devices.</p>';
+      if (NL.Progress) {
+        const done = NL.Progress.doneCount(), total = NL.LABS.length, all = total > 0 && done === total;
+        h += '<div class="progress' + (all ? ' all' : '') + '"><strong>Progress: ' + done + ' / ' + total + ' labs completed</strong><div class="bar"><i style="width:' + (total ? Math.round(done * 100 / total) : 0) + '%"></i></div>' +
+          (all ? '<p>All labs completed - generate your report!</p>' : '') + '<button class="primary" data-lab="report">Completion report (PDF)</button></div>';
+      }
       this.el.innerHTML = h;
     }
-    open(id) { this.lab = NL.LABS.find(l => l.id === id); NL.LabEngine.load(this.topo, this.lab); this.view.select(null); this.onLoad && this.onLoad(this.lab); this.render(); }
+    open(id) { this.solved = false; this.res = null; this.lab = NL.LABS.find(l => l.id === id); NL.LabEngine.load(this.topo, this.lab); this.view.select(null); this.onLoad && this.onLoad(this.lab); this.render(); }
     reset() { this.open(this.lab.id); }
-    check() { const eng = this.topo.engine, save = eng.running; this.render(NL.LabEngine.check(this.topo, this.lab)); }
+    check() {
+      const res = NL.LabEngine.check(this.topo, this.lab), all = res.length > 0 && res.every(r => r.pass);
+      if (NL.Progress && this.lab) {
+        if (this.solved) this.topo.engine.log('Model solution was applied - completion NOT recorded. Press "Reset lab" and configure it yourself.', 'warn');
+        else { const was = NL.Progress.isDone(this.lab.id); NL.Progress.record(this.lab.id, res); if (all && !was) this.topo.engine.log(this.lab.title + ' completed - recorded for your report.', 'ok'); }
+      }
+      this.res = res; this.render(res);
+    }
+    report() { NL.Report && NL.Report.open(); }
     converge() { this.topo.engine.advance(60000); this.topo.engine.log('Fast-forwarded 60 s of simulated time (routing protocols converged)', 'ok'); }
-    solve() { if (!confirm('Apply the model solution? It overwrites your configuration (teachers: use it to compare).')) return; NL.LabEngine.solve(this.topo, this.lab); this.topo.engine.advance(30000); this.view.select(this.view.selected); this.topo.onChange(); this.render(); }
+    solve() { if (!confirm('Apply the model solution? It overwrites your configuration (teachers: use it to compare).')) return; NL.LabEngine.solve(this.topo, this.lab); this.solved = true; this.res = null; this.topo.engine.advance(30000); this.view.select(this.view.selected); this.topo.onChange(); this.render(); }
   };
 })(window.NL = window.NL || {});

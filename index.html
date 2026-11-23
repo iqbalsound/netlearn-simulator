@@ -11,6 +11,7 @@
   <header>
     <h1>NetLearn Simulator - by Iqbal <small>educational simulation · not real firmware</small></h1>
     <button id="btn-theme" title="Switch light/dark theme">Theme</button>
+    <button id="btn-report" title="Create the PDF report of completed labs (student name, ID, dates)">Report</button>
     <button id="btn-about">About</button>
   </header>
 
@@ -51,6 +52,7 @@
   <footer id="footer-credit"></footer>
 
   <dialog id="about-dialog"></dialog>
+  <dialog id="report-dialog"></dialog>
   <dialog id="calc-dialog"><form method="dialog"><h2>Subnet calculator</h2><div class="row"><label>IPv4 address<input id="calc-in" placeholder="172.22.32.12"></label><label>Mask or /prefix<input id="calc-mask" placeholder="255.255.224.0 or 19"></label></div><pre id="calc-out" class="calc"></pre><div class="actions"><button id="calc-go">Calculate</button><button value="close">Close</button></div></form></dialog>
   <dialog id="link-dialog">
     <form method="dialog">
@@ -98,6 +100,9 @@
   <script src="js/ui/inspector.js"></script>
   <script src="js/ui/terminal-ui.js"></script>
   <script src="js/ui/labs-ui.js"></script>
+  <script src="js/ui/pdf-writer.js"></script>
+  <script src="js/ui/progress.js"></script>
+  <script src="js/ui/report.js"></script>
   <script src="js/ui/about-modal.js"></script>
   <script src="js/app.js"></script>
 </body>
