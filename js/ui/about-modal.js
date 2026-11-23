@@ -8,7 +8,7 @@
     bio: 'Cloud Computing and CyberSec enthusiast | Assistant Professor | Mentor | Academic Facilitator | Program Coordinator (BS/AD Programs), HU-NN Block F Site',
     email: 'iqbalsound@yahoo.com',
     linkedin: 'https://www.linkedin.com/in/iqbaluddinkhan/',
-    version: '0.2',
+    version: '0.3',
     license: 'License: to be decided by the author (placeholder).',
     disclaimer: 'This is an educational simulation with simplified behavior. It does not run real vendor firmware.'
   };

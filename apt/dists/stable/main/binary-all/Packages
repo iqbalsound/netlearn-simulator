@@ -15,3 +15,20 @@ Description: NetLearn Simulator - educational network simulator
  Browser-based, offline network simulator for classrooms. Simplified
  behaviour for learning; does not run real vendor firmware.
 
+Package: netlearn-simulator
+Version: 0.3
+Architecture: all
+Maintainer: Iqbal Uddin Khan <iqbalsound@yahoo.com>
+Depends: xdg-utils
+Recommends: firefox | chromium | chromium-browser | google-chrome-stable
+Filename: pool/main/n/netlearn-simulator/netlearn-simulator_0.3_all.deb
+Size: 65474
+MD5sum: 999505edcbc4da669ab9fa65233a0a1a
+SHA1: 13bf8b7e5dfbb7e6bc3341dd5cde0f1856dc4b99
+SHA256: cc1a7895353131eab414778f68a8205847e65c59e32999a28cc164a5f7caf1bf
+Section: education
+Priority: optional
+Description: NetLearn Simulator - educational network simulator
+ Browser-based, offline network simulator for classrooms. Simplified
+ behaviour for learning; does not run real vendor firmware.
+

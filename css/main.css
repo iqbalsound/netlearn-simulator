@@ -94,3 +94,11 @@ pre.calc { background: var(--panel-2); padding: 8px; border-radius: 6px; min-hei
 
 .tabs button.active { color: var(--text); }
 #props-wrap > .tabs { padding-top: 8px; }
+
+/* ---- v0.3: lab progress + completion report ---- */
+.progress { margin-top: 14px; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-2); font-size: 12px; }
+.progress.all { border-color: var(--ok); } .progress p { margin: 6px 0 0; color: var(--ok); }
+.progress .bar { height: 7px; background: var(--border); border-radius: 4px; margin: 6px 0 10px; overflow: hidden; } .progress .bar i { display: block; height: 100%; background: var(--ok); }
+dialog form.report .row input { width: 100%; margin-top: 4px; padding: 5px 8px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; }
+.replist { max-height: 220px; overflow: auto; margin: 6px 0; } .replist li { padding: 1px 0; color: var(--muted); } .replist li.pass { color: var(--ok); } .replist small { float: right; display: inline; margin: 0; }
+.repmsg { min-height: 1.2em; font-size: 12px; margin: 4px 0 8px; color: var(--ok); } .repmsg.bad { color: var(--bad); }
